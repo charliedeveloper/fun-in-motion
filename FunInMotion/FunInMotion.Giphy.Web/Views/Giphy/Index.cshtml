@@ -1,0 +1,130 @@
+﻿@model FunInMotion.Gif.Model.ImagePagination
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    /*div.imagerow {
+        margin-top: 20px;
+    }
+
+    html > /**/ body .caption > nav {
+        margin-top -15px !important;
+        margin-bottom: 2px !important;
+    }*/
+
+    .heart-color-gray {
+        color: gray;
+    }
+
+    .heart-color-red {
+        color: red;
+    }
+    
+    /*.thumbnail {
+        border: 0 solid transparent;
+    }*/
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+@Html.Partial("_NavigationBar")
+
+<br />
+<hr />
+<div class="row">
+    <nav aria-label="...">
+        <ul class="pager">
+            <li><a href="#">Previous</a></li>
+            <li><a href="#">Next</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="row searchresult">
+    @{
+        Html.RenderPartial("_SearchResult", Model);
+    }
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.searchresult').delegate('.addtofavourite', "click", function (event) {
+                var that = $(this);
+                var thumbnailUrl = $(that).data('thumbnailurl');
+                var largeImageUrl = $(that).data('largesizeurl');
+                var sourceid = $(that).data('id');
+                var adddtofav = !$(that).hasClass('addedtofav');
+
+                $.ajax({
+                    url: "Giphy/AddToFavourites",
+                    dataType: 'json',
+                    type: "POST",
+                    data: { "addedtofavourite": adddtofav, "smallimageurl": thumbnailUrl },
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message === "add") {
+                                $(that).addClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-gray').addClass('heart-color-red');
+                            } else {
+                                $(that).removeClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-red').addClass('heart-color-gray');
+                            };
+                        } else {
+                            alert('Failed');
+                        }
+                    }
+                });
+            });
+
+            $('.searchresult').delegate('.addtomygallery', "click", function (event) {
+                var that = $(this);
+                var thumbnailUrl = $(that).data('thumbnailurl');
+                var largeImageUrl = $(that).data('largesizeurl');
+                var sourceid = $(that).data('id');
+                var adddtofav = !$(that).hasClass('addedtofav');
+                var Image = { ThumbnailSizeImageUrl: thumbnailUrl, LargeSizeImageUrl: largeImageUrl, CategoryId: 1, SourceId: sourceid }
+                $.ajax({
+                    url: "Giphy/AddToGallery",
+                    contentType: 'application/json',
+                    type: "POST",
+                    data: "{selectedImage:" + JSON.stringify(Image) + "}",
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message === "add") {
+                                $(that).addClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-gray').addClass('heart-color-red');
+                            } else {
+                                $(that).removeClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-red').addClass('heart-color-gray');
+                            };
+                        } else {
+                            alert('Failed');
+                        }
+                    }
+                });
+            });
+
+            $('#gifsearch').click(function (event) {
+                var searchterm = $('#search_term_entry').val();
+
+                $.ajax({
+                    url: "Giphy/Search",
+                    dataType: 'html',
+                    type: "POST",
+                    data: { "searchterm": searchterm },
+                    success: function (data) {
+                        $('.searchresult').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('mali: ' + error);
+                    }
+                });
+            })
+
+
+        })
+    </script>
+}

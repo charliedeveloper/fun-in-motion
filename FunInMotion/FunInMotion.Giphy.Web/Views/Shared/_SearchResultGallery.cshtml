@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FunInMotion.Gif.Model.UserImageModel>
+
+@{
+    int counter = 0;
+}
+
+<div class="row">
+    <div class="col-md-4" id="pageinformation">
+        @*@ViewBag.PageInformation*@
+    </div>
+</div>
+<div class="row imagerow">
+    @foreach (var image in Model)
+    {
+        if (counter != 0 && counter % 4 == 0)
+        {
+            @:</div>
+            @:<div class="row imagerow">
+        }
+
+        <div class="col-sm-6  col-md-3">
+            <div class="thumbnail ">
+                <a href="@image.LargeSizeImageUrl">
+                    <img src="@image.ThumbnailSizeImageUrl" alt="@image.Name" class="center" style="height: 200px; width: 250px;" />
+                </a>
+            </div>
+            <div class="caption">
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <li class="previous">
+                            <a class="addcategory" style="cursor: pointer" data-id="@image.ImageId"
+                               data-thumbnailurl="@image.ThumbnailSizeImageUrl"
+                               data-largesizeurl="@image.LargeSizeImageUrl">
+                                <i class="glyphicon glyphicon-tags">@image.CategoryName</i>
+                            </a>
+                        </li>
+                        <li class="next">
+                            <a class="removetomygallery" style="cursor: pointer" data-id="@image.ImageId"
+                               data-thumbnailurl="@image.ThumbnailSizeImageUrl"
+                               data-largesizeurl="@image.LargeSizeImageUrl">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                            <a class="addtofavourite" style="cursor: pointer" data-id="@image.ImageId"
+                               data-thumbnailurl="@image.ThumbnailSizeImageUrl"
+                               data-largesizeurl="@image.LargeSizeImageUrl">
+                                <i class="glyphicon glyphicon-heart @(image.IsFavourite ? "heart-color-red" : "heart-color-gray")"></i>
+                                
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    }
+</div>
+

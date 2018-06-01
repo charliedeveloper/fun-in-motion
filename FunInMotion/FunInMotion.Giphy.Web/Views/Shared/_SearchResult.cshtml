@@ -1,0 +1,49 @@
+﻿@using System.Web;
+@model FunInMotion.Gif.Model.ImagePagination
+
+@{
+    int counter = 0;
+}
+
+<div class="row">
+    <div class="col-md-4" id="pageinformation">
+        @ViewBag.PageInformation
+    </div>
+</div>
+<div class="row imagerow">
+    @foreach (var image in Model.ImageCollection)
+    {
+        if (counter != 0 && counter % 4 == 0)
+        {
+            @:</div>
+            @:<div class="row imagerow">
+        }
+
+        <div class="col-sm-6  col-md-3">
+            <div class="thumbnail ">
+                <a href="@image.LargeSizeImageUrl" data-lightbox="@image.Name" data-title="My caption">
+                    <img src="@image.ThumbnailSizeImageUrl" alt="@image.Name" class="center" style="height: 200px; width: 250px;" />
+                </a>
+            </div>
+            <div class="caption">
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <li class="next">
+                            <a class="addtomygallery" style="cursor: pointer" data-id="@image.SourceId"
+                               data-thumbnailurl="@image.ThumbnailSizeImageUrl"
+                               data-largesizeurl="@image.LargeSizeImageUrl">
+                       <i class="glyphicon glyphicon-plus"></i>
+                            </a>
+                            <a class="addtofavourite" style="cursor: pointer" data-id="@image.SourceId"
+                               data-thumbnailurl="@image.ThumbnailSizeImageUrl"
+                               data-largesizeurl="@image.LargeSizeImageUrl">
+                                <i class="glyphicon glyphicon-heart heart-color-gray"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    }
+</div>
+

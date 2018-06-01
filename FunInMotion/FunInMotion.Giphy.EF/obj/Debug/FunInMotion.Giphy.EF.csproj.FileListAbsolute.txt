@@ -1,0 +1,14 @@
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\FunInMotion.Giphy.EF.dll.config
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\FunInMotion.Giphy.EF.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\FunInMotion.Giphy.EF.pdb
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\EntityFramework.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\EntityFramework.SqlServer.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\FunInMotion.Giphy.Model.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\FunInMotion.Giphy.SharedCommon.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\FunInMotion.Giphy.Model.pdb
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\FunInMotion.Giphy.SharedCommon.pdb
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\EntityFramework.xml
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\bin\Debug\EntityFramework.SqlServer.xml
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\obj\Debug\FunInMotion.Giphy.EF.csprojResolveAssemblyReference.cache
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\obj\Debug\FunInMotion.Giphy.EF.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.EF\obj\Debug\FunInMotion.Giphy.EF.pdb

@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav">
+       <li>
+            @Html.ActionLink("My Gallery", "Index", "Galary", null, new { @class = "nav-link" })
+       <li>
+            @Html.ActionLink("Giphy", "Index", "Giphy", null, new { @class = "nav-link" })
+        </li>
+    </ul>
+    <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+            <input type="text" id="search_term_entry" class="form-control" placeholder="Search (Ex: CAT)" >
+        </div>
+        <a class="btn btn-default" style="cursor: pointer" alt="Thumbnail view" id="gifsearch"> <i class="glyphicon glyphicon-search"></i></a>
+        <span class="label label-primary" style="margin-left:15px;">Hello  @User.Identity.GetUserName()</span>
+        @Html.ActionLink("Logout", "SignOut", "Account", null, new { @class = "nav-link" })
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Register", "SignUp", "Account", null, new { @class = "nav-link" })
+        </li>
+        <li>
+            @Html.ActionLink("Login", "LogIn", "Account", null, new { @class = "nav-link  active" })
+        </li>
+    </ul>
+}

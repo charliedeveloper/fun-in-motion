@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GifCollectionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Gif">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SourceId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ThumbnailSizeImageUrl" Type="nvarchar" MaxLength="150" />
+          <Property Name="LargeSizeImageUrl" Type="nvarchar" MaxLength="150" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="5" />
+          <Property Name="StarRating" Type="int" />
+          <Property Name="IsFavourite" Type="bit" />
+          <Property Name="CategoryId" Type="int" />
+        </EntityType>
+        <EntityType Name="ImageTag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="30" />
+          <Property Name="Password" Type="varchar" MaxLength="30" />
+          <Property Name="Firstname" Type="varchar" MaxLength="50" />
+          <Property Name="Lastname" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="PK_Category_FK_Gif">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Gif" Type="Self.Gif" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Gif">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_Gif_FK_ImageTag">
+          <End Role="Gif" Type="Self.Gif" Multiplicity="1" />
+          <End Role="ImageTag" Type="Self.ImageTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gif">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="ImageTag">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_User_FK_Gif">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Gif" Type="Self.Gif" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Gif">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GifCollectionModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gif" EntityType="Self.Gif" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageTag" EntityType="Self.ImageTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="PK_Category_FK_Gif" Association="Self.PK_Category_FK_Gif">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Gif" EntitySet="Gif" />
+          </AssociationSet>
+          <AssociationSet Name="PK_Gif_FK_ImageTag" Association="Self.PK_Gif_FK_ImageTag">
+            <End Role="Gif" EntitySet="Gif" />
+            <End Role="ImageTag" EntitySet="ImageTag" />
+          </AssociationSet>
+          <AssociationSet Name="PK_User_FK_Gif" Association="Self.PK_User_FK_Gif">
+            <End Role="User" EntitySet="User" />
+            <End Role="Gif" EntitySet="Gif" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GifCollectionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Gifs" Relationship="Self.PK_Category_FK_Gif" FromRole="Category" ToRole="Gif" />
+        </EntityType>
+        <EntityType Name="Gif">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SourceId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ThumbnailSizeImageUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LargeSizeImageUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="StarRating" Type="Int32" />
+          <Property Name="IsFavourite" Type="Boolean" />
+          <Property Name="CategoryId" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="Self.PK_Category_FK_Gif" FromRole="Gif" ToRole="Category" />
+          <NavigationProperty Name="ImageTags" Relationship="Self.PK_Gif_FK_ImageTag" FromRole="Gif" ToRole="ImageTag" />
+          <NavigationProperty Name="User" Relationship="Self.PK_User_FK_Gif" FromRole="Gif" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ImageTag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gif" Relationship="Self.PK_Gif_FK_ImageTag" FromRole="ImageTag" ToRole="Gif" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Gifs" Relationship="Self.PK_User_FK_Gif" FromRole="User" ToRole="Gif" />
+        </EntityType>
+        <Association Name="PK_Category_FK_Gif">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Gif" Type="Self.Gif" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Gif">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_Gif_FK_ImageTag">
+          <End Role="Gif" Type="Self.Gif" Multiplicity="1" />
+          <End Role="ImageTag" Type="Self.ImageTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gif">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="ImageTag">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_User_FK_Gif">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Gif" Type="Self.Gif" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Gif">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GifCollectionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Gifs" EntityType="Self.Gif" />
+          <EntitySet Name="ImageTags" EntityType="Self.ImageTag" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="PK_Category_FK_Gif" Association="Self.PK_Category_FK_Gif">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Gif" EntitySet="Gifs" />
+          </AssociationSet>
+          <AssociationSet Name="PK_Gif_FK_ImageTag" Association="Self.PK_Gif_FK_ImageTag">
+            <End Role="Gif" EntitySet="Gifs" />
+            <End Role="ImageTag" EntitySet="ImageTags" />
+          </AssociationSet>
+          <AssociationSet Name="PK_User_FK_Gif" Association="Self.PK_User_FK_Gif">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Gif" EntitySet="Gifs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GifCollectionModelStoreContainer" CdmEntityContainer="GifCollectionEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="GifCollectionModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gifs">
+            <EntityTypeMapping TypeName="GifCollectionModel.Gif">
+              <MappingFragment StoreEntitySet="Gif">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="ThumbnailSizeImageUrl" ColumnName="ThumbnailSizeImageUrl" />
+                <ScalarProperty Name="LargeSizeImageUrl" ColumnName="LargeSizeImageUrl" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="StarRating" ColumnName="StarRating" />
+                <ScalarProperty Name="IsFavourite" ColumnName="IsFavourite" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageTags">
+            <EntityTypeMapping TypeName="GifCollectionModel.ImageTag">
+              <MappingFragment StoreEntitySet="ImageTag">
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GifCollectionModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

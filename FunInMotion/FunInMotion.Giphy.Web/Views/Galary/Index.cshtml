@@ -1,0 +1,183 @@
+﻿@model IEnumerable<FunInMotion.Gif.Model.UserImageModel>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+
+    .heart-color-gray {
+        color: gray;
+    }
+
+    .heart-color-red {
+        color: red;
+    }
+
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+@Html.Partial("_NavigationBar")
+
+<br />
+<hr />
+<div class="row">
+    <nav aria-label="...">
+        <ul class="pager">
+            <li><a href="#">Previous</a></li>
+            <li><a href="#">Next</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="row searchresult">
+    @{
+        Html.RenderPartial("_SearchResultGallery", Model);
+    }
+</div>
+<!-- Modal -->
+<div id="modal">
+    <div class="row">
+        <div class="col-md-6">
+            <img  id="imagepreview" src="" alt="No Image" class="center" style="height: 200px; width: 250px;">
+        </div>
+        <div class="col-md-6">
+                 @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select ...", new { htmlAttributes = new { @class = "form-control", @autocomplete = "nope", style = "width: 450px;" } })
+                
+            <button type="button" class="btn btn-primary btn-xs" 
+                    data-toggle="button" id="saveimagecategory"
+                    aria-pressed="false" autocomplete="off">Save
+            </button>
+                
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var selectedImageId;
+        $(document).ready(function () {
+            $("#modal").iziModal({
+                title: 'CATEGORY',
+                headerColor: '#88A0B9',
+                closeOnEscape: true,
+                closeButton: true,
+                transitionIn: 'comingIn',
+                transitionOut: 'comingOut',
+                transitionInOverlay: 'fadeIn',
+                transitionOutOverlay: 'fadeOut',
+                width: 700,
+                radius: 5,
+                padding: 20,
+            });
+
+            $('.searchresult').delegate('.addtofavourite', "click", function (event) {
+                var that = $(this);
+                var adddtofav = !$(that).hasClass('addedtofav');
+                selectedImageId = $(that).data('id');
+                var selectedCategoryId = $('#Category').val();
+                $.ajax({
+                    url: "Galary/SetImageFavourite",
+                    dataType: 'json',
+                    type: "POST",
+                    data: { "imageId": selectedImageId, "isFavourite": adddtofav },
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message === "add") {
+                                $(that).addClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-gray').addClass('heart-color-red');
+                            } else {
+                                $(that).removeClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-red').addClass('heart-color-gray');
+                            };
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //error msg here if neccessary
+                    }
+                });
+
+            });
+
+            $('.searchresult').delegate('.addtomygallery', "click", function (event) {
+                var that = $(this);
+                var thumbnailUrl = $(that).data('thumbnailurl');
+                var largeImageUrl = $(that).data('largesizeurl');
+                var sourceid = $(that).data('id');
+                var adddtofav = !$(that).hasClass('addedtofav');
+                var Image = { ThumbnailSizeImageUrl: thumbnailUrl, LargeSizeImageUrl: largeImageUrl, CategoryId: 1, SourceId: sourceid }
+                $.ajax({
+                    url: "Giphy/AddToGallery",
+                    contentType: 'application/json',
+                    type: "POST",
+                    data: "{selectedImage:" + JSON.stringify(Image) + "}",
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.message === "add") {
+                                $(that).addClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-gray').addClass('heart-color-red');
+                            } else {
+                                $(that).removeClass("addedtofav");
+                                $(that).find('i').removeClass('heart-color-red').addClass('heart-color-gray');
+                            };
+                        } else {
+                            alert('Failed');
+                        }
+                    }
+                });
+            });
+
+            $('#gifsearch').click(function (event) {
+                var searchterm = $('#search_term_entry').val();
+
+                $.ajax({
+                    url: "Giphy/Search",
+                    dataType: 'html',
+                    type: "POST",
+                    data: { "searchterm": searchterm },
+                    success: function (data) {
+                        $('.searchresult').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('mali: ' + error);
+                    }
+                });
+            })
+
+            $('.searchresult').delegate('.addcategory', "click", function (event) {
+                event.preventDefault();
+                var that = $(this);
+                var thumbnailUrl = $(that).data('thumbnailurl');
+                selectedImageId = $(that).data('id');
+                var firstChild = $('#imagepreview');
+                firstChild.attr('src', thumbnailUrl);
+               
+                //$(firstChild).attr('src', thumbnailUrl);
+                // $('#modal').iziModal('setZindex', 99999);
+                // $('#modal').iziModal('open', { zindex: 99999 });
+                $('#modal').iziModal('open');
+            });
+
+            $('#saveimagecategory').click(function (e) {
+                var selectedCategoryId = $('#Category').val();
+                $.ajax({
+                    url: "Galary/UpdateImageCategory",
+                    dataType: 'json',
+                    type: "POST",
+                    data: { "imageId": selectedImageId, "categoryid": selectedCategoryId },
+                    success: function (data) {
+                        if (data.success) {
+                            //Dislay toastr
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //error msg here if neccessary
+                    }
+                });
+
+            });
+        })
+    </script>
+}

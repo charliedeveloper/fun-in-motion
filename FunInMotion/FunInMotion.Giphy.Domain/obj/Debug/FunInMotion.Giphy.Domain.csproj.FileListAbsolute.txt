@@ -1,0 +1,9 @@
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\obj\Debug\FunInMotion.Giphy.Domain.csprojResolveAssemblyReference.cache
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\bin\Debug\FunInMotion.Giphy.Domain.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\bin\Debug\FunInMotion.Giphy.Domain.pdb
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\bin\Debug\FunInMotion.Giphy.DataService.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\bin\Debug\FunInMotion.Giphy.ViewModel.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\bin\Debug\FunInMotion.Giphy.DataService.pdb
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\bin\Debug\FunInMotion.Giphy.ViewModel.pdb
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\obj\Debug\FunInMotion.Giphy.Domain.dll
+E:\Projects\ASP.MVC-PROJECTS\FunInMotion\FunInMotion.Giphy.Domain\obj\Debug\FunInMotion.Giphy.Domain.pdb
