@@ -13,3 +13,8 @@ This is the value of the existing connectionstring that you need to replace.
  <connectionStrings>
     <add name="GifCollectionEntities" connectionString="metadata=res://*/FunInMotionModel.csdl|res://*/FunInMotionModel.ssdl|res://*/FunInMotionModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=CHARLIE;initial catalog=GifCollection;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
   </connectionStrings>
+
+
+NOTE:
+
+Whenever you have an issue on executing the "GifCollection.sql" script. the othey way around is you have to the database manula and name in "GifCollection" then execute the "tablesonly.sql" followed by "CategorySeedData.sql"
